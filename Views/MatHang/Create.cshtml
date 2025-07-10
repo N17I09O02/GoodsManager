@@ -1,0 +1,27 @@
+﻿@model Web_Manage.Models.MatHang
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Thêm mặt hàng";
+}
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken() <!-- QUAN TRỌNG -->
+
+    <div>
+        <label>Tên mặt hàng</label>
+        <input asp-for="TenMatHang" class="form-control" />
+        <span asp-validation-for="TenMatHang" class="text-danger"></span>
+    </div>
+
+    <div>
+        <label>Giá</label>
+        <input asp-for="Gia" class="form-control" />
+        <span asp-validation-for="Gia" class="text-danger"></span>
+    </div>
+    <div>
+        <label>Trạng Thái</label>
+        <input asp-for="TrangThai" type="checkbox" class="form-check-input" />
+    </div>
+
+    <button type="submit">Thêm</button>
+</form>
+

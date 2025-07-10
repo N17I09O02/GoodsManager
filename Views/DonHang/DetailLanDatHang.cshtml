@@ -1,0 +1,97 @@
+﻿@model List<Web_Manage.Models.LanDatHang>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Danh sách lần đặt hàng";
+}
+
+<h2>Danh sách lần đặt hàng - Đơn hàng @Model?.FirstOrDefault()?.IdDonHang</h2>
+
+
+<script type="module" src="/js/lanDatHang.js"></script>
+
+
+<script type="module">
+    import { xemHinhAnhById } from '/js/imageViewer.js';
+
+    window.xemHinhLanDatHang = (id) => {
+        xemHinhAnhById(id, '/api/ImageApi/get-url', `img-container-${id}`);
+    };
+</script>
+
+
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">Đơn hàng này chưa có lần đặt hàng nào.</div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Mã lần đặt</th>
+                <th>Thời gian</th>
+                <th>Số lượng</th>
+                <th>Tổng tiền</th>
+                <th>Hình ảnh</th>
+                <th>Trạng thái đơn</th>
+                <th>Chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var lan in Model)
+            {
+                <tr>
+                    <td>@lan.IdLanDatHang</td>
+                    <td>@lan.ThoiGian.ToString("HH\\:mm")</td>
+                    <td>@lan.SoLuong</td>
+                    <td>@lan.TongTien.ToString("N0") đ</td>
+                    <td>
+                        <button onclick="xemHinhLanDatHang(@lan.IdLanDatHang)" class="btn btn-sm btn-info">Xem ảnh</button>
+                        <div id="img-container-@lan.IdLanDatHang" class="mt-1"></div>
+
+                        <form asp-controller="Image" asp-action="Create" method="post" enctype="multipart/form-data" class="d-flex flex-column">
+                            <input type="hidden" name="idLanDatHang" value="@lan.IdLanDatHang" />
+                            <input type="hidden" name="idDonHang" value="0" />
+
+                            <!-- Ẩn input file -->
+                            <input type="file" id="fileInput-@lan.IdLanDatHang" name="file" accept="image/*" required style="display: none;" />
+
+                            <!-- Label để thay thế nút chọn -->
+                            <label for="fileInput-@lan.IdLanDatHang" class="btn btn-secondary btn-sm">Chọn ảnh</label>
+
+                            <button type="submit" class="btn btn-success btn-sm mt-1">Tải ảnh</button>
+                        </form>
+                    </td>
+
+                    <td>
+                        <div id="trang-thai-@lan.IdLanDatHang" class="mt-1 fw-bold text-info">Đang kiểm tra...</div>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-info btn-sm" onclick="toggleChiTiet(@lan.IdLanDatHang)">
+                            Xem chi tiết
+                        </button>
+                    </td>
+                </tr>
+                <tr id="ct-@lan.IdLanDatHang" style="display:none;">
+                    <td colspan="6">
+                        <div id="ct-content-@lan.IdLanDatHang">
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const ids = @Html.Raw(Json.Serialize(Model.Select(x => x.IdLanDatHang)));
+        for (let id of ids) {
+            capNhatTrangThaiDon(id);
+        }
+    });
+</script>

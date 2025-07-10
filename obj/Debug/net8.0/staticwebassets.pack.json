@@ -1,0 +1,37 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\WorkShop\\Web_Manage\\Web_Manage\\wwwroot\\css\\site.css",
+      "PackagePath": "staticwebassets\\css\\site.css"
+    },
+    {
+      "Id": "E:\\WorkShop\\Web_Manage\\Web_Manage\\wwwroot\\js\\createDonHang.js",
+      "PackagePath": "staticwebassets\\js\\createDonHang.js"
+    },
+    {
+      "Id": "E:\\WorkShop\\Web_Manage\\Web_Manage\\wwwroot\\js\\imageViewer.js",
+      "PackagePath": "staticwebassets\\js\\imageViewer.js"
+    },
+    {
+      "Id": "E:\\WorkShop\\Web_Manage\\Web_Manage\\wwwroot\\js\\lanDatHang.js",
+      "PackagePath": "staticwebassets\\js\\lanDatHang.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Web_Manage.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Web_Manage.props",
+      "PackagePath": "build\\Web_Manage.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Web_Manage.props",
+      "PackagePath": "buildMultiTargeting\\Web_Manage.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Web_Manage.props",
+      "PackagePath": "buildTransitive\\Web_Manage.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Upload file lên S3";
+}
+
+<h2>Upload file</h2>
+
+<form method="post" enctype="multipart/form-data" asp-action="Upload">
+    <input type="file" name="file" />
+    <button type="submit">Upload</button>
+</form>
+
+@if (ViewBag.ImageUrl != null)
+{
+    <h3>File uploaded:</h3>
+    <img src="@ViewBag.ImageUrl" style="max-width:400px" />
+    <p>@ViewBag.ImageUrl</p>
+}

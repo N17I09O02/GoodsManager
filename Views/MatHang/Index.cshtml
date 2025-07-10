@@ -1,0 +1,42 @@
+﻿@model List<Web_Manage.Models.MatHang>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Danh sách mặt hàng hàng";
+}
+<h2>Danh sách hàng hóa</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên mặt hàng</th>
+            <th>Giá</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var hh in Model)
+    {
+        <tr>
+            <td>@hh.IdMatHang</td>
+            <td>@hh.TenMatHang</td>
+            <td>@hh.Gia</td>
+            <td>
+                @if (hh.TrangThai == true)
+                {
+                    <span class="badge bg-success">Đang cung cấp</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Ngưng cung cấp</span>
+                }
+            <td>
+                    <a asp-controller="MatHang" asp-action="Edit" asp-route-id="@hh.IdMatHang" class="btn btn-sm btn-primary">Sửa</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-success">Thêm mới</a>

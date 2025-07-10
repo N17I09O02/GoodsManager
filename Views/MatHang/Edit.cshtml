@@ -1,0 +1,31 @@
+﻿@model Web_Manage.Models.MatHang
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Chỉnh sửa mặt hàng";
+}
+<h2>Sửa mặt hàng</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="IdMatHang" />
+
+    <div class="mb-3">
+        <label class="form-label">Tên mặt hàng</label>
+        <input asp-for="TenMatHang" class="form-control" />
+        <span asp-validation-for="TenMatHang" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Giá</label>
+        <input asp-for="Gia" class="form-control" />
+        <span asp-validation-for="Gia" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3 form-check">
+        <input asp-for="TrangThai" type="checkbox" class="form-check-input" />
+        <label class="form-check-label">Trạng thái</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>
+

@@ -1,0 +1,50 @@
+﻿@model List<Web_Manage.Models.KhachHang>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Danh sách khách hàng";
+}
+
+<h2>Danh sách khách hàng</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên khách hàng</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Email</th>
+            <th>Tiền nợ</th>
+            <th>Doanh nghiệp</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hh in Model)
+        {
+            <tr>
+                <td>@hh.IdKhachHang</td>
+                <td>@hh.TenKhachHang</td>
+                <td>@hh.SDT</td>
+                <td>@hh.DiaChi</td>
+                <td>@(string.IsNullOrEmpty(hh.Email) ? "Không có email" : hh.Email)</td>
+                <td>@((hh.TienNo == null || hh.TienNo == 0) ? "Không có tiền nợ" : hh.TienNo.Value.ToString("N2"))</td>
+                <td>@(hh.DoanhNghiep ? "✔️" : "❌")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@hh.IdKhachHang" method="post" class="btn btn-sm btn-warning">Sửa</a>
+
+                    @* <form asp-action="Delete" asp-route-id="@hh.IdKhachHang" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</button>
+                    </form> *@
+
+                    <a asp-action="Create" asp-controller="DonHang" asp-route-idkhachHang="@hh.IdKhachHang" class="btn btn-sm btn-warning">Đặt hàng</a>
+
+                    <a asp-controller="DonHang" asp-action="DetailDonHang" asp-route-id="@hh.IdKhachHang" class="btn btn-sm btn-primary">Danh sách đơn hàng</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-success">Thêm mới</a>
