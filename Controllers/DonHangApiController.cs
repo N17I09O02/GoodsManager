@@ -16,7 +16,10 @@ namespace Web_Manage.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() => Ok(await _service.GetAllAsync());
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _service.GetAllAsync(DateOnly.FromDateTime(DateTime.Now)));
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] DonHang donHang) // Gửi JSON => cần [FromBody]

@@ -36,6 +36,7 @@
             `;
 
             for (let item of data) {
+                console.log("🧾 Render item:", item.id);
                 html += `
                     <tr>
                         <td>${item.idChiTietDonHang}</td>
@@ -43,7 +44,8 @@
                         <td>${item.soLuong}</td>
                         <td>${item.tongTien.toLocaleString()} đ</td>
                         <td>
-                            <select class="form-select form-select-sm" onchange="capNhatTrangThai(${item.idChiTietDonHang}, ${idLanDatHang}, this.value)">
+                            <select id="trangthai-${item.idChiTietDonHang}" class="form-select form-select-sm"
+                                    onchange="capNhatTrangThai(${item.idChiTietDonHang}, ${idLanDatHang}, this.value)">
                                 <option value="0" ${Number(item.trangThai) === 0 ? 'selected' : ''}>Chưa giao</option>
                                 <option value="1" ${Number(item.trangThai) === 1 ? 'selected' : ''}>Đã giao</option>
                                 <option value="2" ${Number(item.trangThai) === 2 ? 'selected' : ''}>Đã hủy</option>
@@ -55,10 +57,10 @@
 
             html += "</tbody></table>";
             content.innerHTML = html;
-
+            console.log(content.innerHTML)
             // ✅ Cập nhật trạng thái đơn hàng tổng
             await capNhatTrangThaiDon(idLanDatHang, data);
-
+            // location.reload();
         } catch (err) {
             content.innerHTML = "<span class='text-danger'>Lỗi khi tải dữ liệu.</span>";
         }
@@ -82,12 +84,15 @@ window.capNhatTrangThai = async function (idChiTiet, idLanDatHang, newTrangThai)
             alert('❌ Cập nhật trạng thái thất bại');
         } else {
             console.log(`✅ Đã cập nhật trạng thái ID ${idChiTiet} thành ${newTrangThai}`);
-            await capNhatTrangThaiDon(idLanDatHang);
+
+            // ✅ Cập nhật ngay class hoặc hiển thị trạng thái nếu có
+            await capNhatTrangThaiDon(idLanDatHang); // cập nhật tổng trạng thái
         }
     } catch (err) {
         alert('❌ Có lỗi xảy ra khi gửi yêu cầu cập nhật');
     }
 };
+
 
 
 window.capNhatTrangThaiDon = async function (idLanDatHang, chiTietList) {
@@ -126,8 +131,18 @@ window.chonTatCaDaGiao = async function (idLanDatHang) {
     const data = await res.json();
 
     for (let item of data) {
+        // ✅ 1. Cập nhật giao diện ngay
+        const select = document.getElementById(`trangthai-${item.idChiTietDonHang}`);
+        if (select) {
+            select.value = "1"; // Giao diện đổi về "Đã giao"
+        }
+
+        // ✅ 2. Gửi yêu cầu cập nhật đến API
         await capNhatTrangThai(item.idChiTietDonHang, idLanDatHang, 1);
     }
 
+    // ✅ 3. Cập nhật trạng thái tổng
     await capNhatTrangThaiDon(idLanDatHang);
 };
+
+

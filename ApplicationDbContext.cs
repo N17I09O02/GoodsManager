@@ -12,5 +12,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<KhachHang> KhachHangs { get; set; }
     public DbSet<DoanhNghiep> DoanhNghieps { get; set; }
     public DbSet<Image> images { get; set; }
+    public DbSet<NguyenLieu> nguyenLieus { get; set; }
+    public DbSet<DoiTac> doiTacs { get; set; }
+    public DbSet<DoiTacNguyenLieu> doiTacNguyenLieus { get; set; }
 }
 

@@ -1,0 +1,43 @@
+﻿@model List<Web_Manage.Models.DoiTac>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Danh sách đối tác";
+}
+
+<h2>Danh sách đối tác</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên đối tác</th>
+            <th>Số điện thoại</th>
+            <th>Địa chỉ</th>
+            <th>Email</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hh in Model)
+        {
+            <tr>
+                <td>@hh.IdDoiTac</td>
+                <td>@hh.TenDoiTac</td>
+                <td>@hh.SDT</td>
+                <td>@hh.DiaChi</td>
+                <td>@(string.IsNullOrEmpty(hh.Email) ? "Không có email" : hh.Email)</td>
+                <td>@(hh.TrangThai ? "Đang cung cấp" : "Ngừng cung cấp")</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@hh.IdDoiTac" method="post" class="btn btn-sm btn-warning">Sửa</a>
+                    @* <a asp-action="Create" asp-controller="DonHang" asp-route-idkhachHang="@hh.IdDoiTac" class="btn btn-sm btn-warning">Đặt hàng</a>
+
+                    <a asp-controller="DonHang" asp-action="DetailDonHang" asp-route-id="@hh.IdDoiTac" class="btn btn-sm btn-primary">Danh sách đơn hàng</a> *@
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="DoiTac" asp-action="Create" class="btn btn-success">Thêm mới</a>

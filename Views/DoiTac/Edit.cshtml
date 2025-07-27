@@ -1,0 +1,116 @@
+﻿@model Web_Manage.ViewModels.DoiTacNguyenLieuViewModel
+
+@{
+    ViewData["Title"] = "Chỉnh sửa đối tác";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var daTonTai = Model.NguyenLieuGias.Where(x => x.Gia > 0).ToList();
+    var chuaTonTai = Model.NguyenLieuGias.Where(x => x.Gia == 0).ToList();
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Cập nhật thông tin đối tác</h2>
+
+    <form asp-action="Edit" method="post" class="row g-3">
+        <input type="hidden" asp-for="DoiTac.IdDoiTac" />
+
+        <div class="col-md-6">
+            <label asp-for="DoiTac.TenDoiTac" class="form-label">Tên đối tác</label>
+            <input asp-for="DoiTac.TenDoiTac" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="DoiTac.DiaChi" class="form-label">Địa chỉ</label>
+            <input asp-for="DoiTac.DiaChi" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="DoiTac.SDT" class="form-label">Số điện thoại</label>
+            <input asp-for="DoiTac.SDT" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="DoiTac.Email" class="form-label"></label>
+            <input asp-for="DoiTac.Email" class="form-control" />
+        </div>
+
+        <div class="col-12">
+            <div class="form-check">
+                <input asp-for="DoiTac.TrangThai" class="form-check-input" />
+                <label asp-for="DoiTac.TrangThai" class="form-check-label">Đang hoạt động</label>
+            </div>
+        </div>
+
+        <div class="col-12 mt-4">
+            <h5 class="text-primary">Nguyên liệu đang cung cấp</h5>
+            <table class="table table-sm table-bordered align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width:40%">Tên nguyên liệu</th>
+                        <th style="width:20%">Giá (VNĐ)</th>
+                        <th style="width:25%">Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < daTonTai.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @daTonTai[i].TenNguyenLieu
+                                <input type="hidden" name="NguyenLieuGias[@i].IdNguyenLieu" value="@daTonTai[i].IdNguyenLieu" />
+                                <input type="hidden" name="NguyenLieuGias[@i].TenNguyenLieu" value="@daTonTai[i].TenNguyenLieu" />
+                            </td>
+                            <td>
+                                <input name="NguyenLieuGias[@i].Gia" value="@daTonTai[i].Gia" class="form-control form-control-sm text-end" />
+                            </td>
+                            <td>
+                                <select name="NguyenLieuGias[@i].DangCungCap" class="form-select form-select-sm">
+                                    <option value="true" selected="@(daTonTai[i].DangCungCap ? "selected" : null)">Đang cung cấp</option>
+                                    <option value="false" selected="@(daTonTai[i].DangCungCap ? null : "selected")">Ngừng cung cấp</option>
+                                </select>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        @if (chuaTonTai.Any())
+        {
+            <div class="col-12 mt-4">
+                <h5 class="text-success">Thêm nguyên liệu mới</h5>
+                <table class="table table-sm table-bordered align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th style="width:5%">Chọn</th>
+                            <th style="width:45%">Tên nguyên liệu</th>
+                            <th style="width:20%">Giá (VNĐ)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < chuaTonTai.Count; i++)
+                        {
+                            var index = daTonTai.Count + i;
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" name="NguyenLieuGias[@index].DuocChon" value="true" />
+                                    <input type="hidden" name="NguyenLieuGias[@index].IdNguyenLieu" value="@chuaTonTai[i].IdNguyenLieu" />
+                                    <input type="hidden" name="NguyenLieuGias[@index].TenNguyenLieu" value="@chuaTonTai[i].TenNguyenLieu" />
+                                </td>
+                                <td>@chuaTonTai[i].TenNguyenLieu</td>
+                                <td>
+                                    <input name="NguyenLieuGias[@index].Gia" class="form-control form-control-sm text-end" value="0" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+        <div class="col-12 text-end mt-4">
+            <button type="submit" class="btn btn-primary me-2">💾 Lưu thay đổi</button>
+            <a asp-action="Index" class="btn btn-secondary">↩️ Quay lại</a>
+        </div>
+    </form>
+</div>

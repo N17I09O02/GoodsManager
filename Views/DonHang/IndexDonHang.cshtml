@@ -1,0 +1,56 @@
+﻿@model List<Web_Manage.Models.DonHang>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Danh sách đơn hàng trong ngày";
+}
+
+<h2 class="text-center my-4">📋 Danh sách đơn hàng trong ngày</h2>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info text-center">
+        Không có đơn hàng nào trong ngày hôm nay.
+    </div>
+}
+else
+{
+    <table class="table table-hover table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Ngày đặt</th>
+                <th>Khách hàng (ID)</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái thanh toán</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var donHang in Model)
+            {
+                <tr>
+                    <td>@donHang.IdDonHang</td>
+                    <td>@donHang.NgayDat.ToString("dd/MM/yyyy")</td>
+                    <td>@donHang.IdKhachHang</td>
+                    <td>@donHang.TongTien.ToString("N0") đ</td>
+                    <td>
+                        @if (donHang.ThanhToan)
+                        {
+                            <span class="text-success">Đã thanh toán</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">Chưa thanh toán</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-controller="DonHang" asp-action="DetailLanDatHang" asp-route-id="@donHang.IdDonHang" class="btn btn-sm btn-info">Chi tiết</a>
+                        <a asp-action="Sua" asp-route-id="@donHang.IdDonHang" class="btn btn-sm btn-warning">Sửa</a>
+                        <a asp-action="Xoa" asp-route-id="@donHang.IdDonHang" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xoá đơn hàng này?')">Xoá</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,56 @@
+﻿@model List<Web_Manage.Models.NguyenLieu>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "View";
+}
+
+<h2>Danh sách nguyên liệu</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tên nguyên liệu</th>
+            <th>Đơn vị tính</th>
+            <th>Số lượng</th>
+            <th>Trạng thái</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hh in Model)
+        {
+            <tr>
+                <td>@hh.IdNguyenLieu</td>
+                <td>@hh.TenNguyenLieu</td>
+                <td>
+                    @if(hh.DonViTinh == 1){
+                        <span class="badge bg-success">Kg</span>
+                    }
+                    else if (hh.DonViTinh == 2){
+                        <span class="badge bg-success">Bao</span>
+                    }
+                    else if( hh.DonViTinh == 3){
+                        <span class="badge bg-success">Đơn vị (cái)</span>
+                    }
+                </td>
+                <td>@hh.SoLuongTon</td>
+                <td>
+                    @if (hh.TrangThai == true)
+                    {
+                        <span class="badge bg-success">Đang cung cấp</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Ngưng cung cấp</span>
+                    }
+                <td>
+                    <a asp-controller="MatHang" asp-action="Edit" asp-route-id="@hh.IdNguyenLieu" class="btn btn-sm btn-primary">Sửa</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-success">Thêm mới</a>

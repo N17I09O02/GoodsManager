@@ -17,6 +17,9 @@ builder.Services.AddScoped<DonHangService>();
 builder.Services.AddScoped<LanDatHangService>();
 builder.Services.AddScoped<ChiTietDatHangService>();
 builder.Services.AddScoped<DoanhNghiepService>();
+builder.Services.AddScoped<DoiTacService>();
+builder.Services.AddScoped<DoiTacNguyenLieuService>();
+builder.Services.AddScoped<NguyenLieuService>();
 
 builder.Services.AddDefaultAWSOptions(new AWSOptions());
 builder.Services.AddAWSService<IAmazonS3>();

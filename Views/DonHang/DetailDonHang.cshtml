@@ -8,12 +8,23 @@
 <h2>Danh sách đơn hàng của khách hàng</h2>
 
 <script type="module">
-    import { xemHinhAnhById } from '/js/imageViewer.js';
+    import { xemHinhAnhById, anNutNeuKhongCoAnh } from '/js/imageViewer.js';
 
     window.xemHinhLanDatHang = (id) => {
         xemHinhAnhById(id, '/api/ImageApi/get-url', `img-container-${id}`);
     };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const ids = @Html.Raw(Json.Serialize(Model.Select(x => x.IdDonHang)));
+
+        for (let id of ids) {
+
+            // Kiểm tra ảnh và ẩn nút nếu không có
+            anNutNeuKhongCoAnh(id, '/api/ImageApi/get-url', `btn-xem-anh-${id}`);
+        }
+    });
 </script>
+
 @if (Model == null || !Model.Any())
 {
     <div class="alert alert-info">Khách hàng chưa có đơn hàng nào.</div>
@@ -39,12 +50,15 @@ else
                     <td>@dh.NgayDat.ToString("dd/MM/yyyy")</td>
                     <td>@dh.TongTien.ToString("N0") đ</td>
                     <td>
-                        <button onclick="xemHinhLanDatHang(@dh.IdDonHang)" class="btn btn-sm btn-info">Xem ảnh</button>
+                        <button id="btn-xem-anh-@dh.IdDonHang" onclick="xemHinhLanDatHang(@dh.IdDonHang)" class="btn btn-sm btn-info">Xem ảnh</button>
                         <div id="img-container-@dh.IdDonHang" class="mt-1"></div>
                         <form asp-controller="Image" asp-action="Create" method="post" enctype="multipart/form-data" class="d-flex flex-column">
                             <input type="hidden" name="idDonHang" value="@dh.IdDonHang" />
                             <input type="hidden" name="idLanDatHang" value="0" />
-                            <input type="file" name="file" accept="image/*" required class="form-control-file" />
+
+                            <!-- Chỉ chấp nhận ảnh JPG -->
+                            <input type="file" name="file" accept=".jpg,image/jpeg" required class="form-control-file" />
+
                             <button type="submit" class="btn btn-success btn-sm mt-1">Tải ảnh</button>
                         </form>
                     </td>

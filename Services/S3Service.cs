@@ -9,7 +9,7 @@ namespace Web_Manage.Services
     public class S3Service
     {
         private readonly IAmazonS3 _s3Client;
-        private readonly string _bucketName = "my-first-cloud-web--use1-az6--x-s3";
+        private readonly string _bucketName = "cf-templates-29w3zrvbs88r-us-east-1";
         private readonly ApplicationDbContext _context;
 
         public S3Service(IAmazonS3 s3Client, ApplicationDbContext context)
@@ -80,6 +80,5 @@ namespace Web_Manage.Services
         {
             return $"https://{_bucketName}.s3.amazonaws.com/{key}";
         }
-
     }
 }

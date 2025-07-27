@@ -12,11 +12,22 @@
 
 
 <script type="module">
-    import { xemHinhAnhById } from '/js/imageViewer.js';
+    import { xemHinhAnhById, anNutNeuKhongCoAnh } from '/js/imageViewer.js';
 
     window.xemHinhLanDatHang = (id) => {
         xemHinhAnhById(id, '/api/ImageApi/get-url', `img-container-${id}`);
     };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const ids = @Html.Raw(Json.Serialize(Model.Select(x => x.IdLanDatHang)));
+
+        for (let id of ids) {
+            capNhatTrangThaiDon(id);
+
+            // Gọi hàm kiểm tra ảnh tái sử dụng từ module
+            anNutNeuKhongCoAnh(id, '/api/ImageApi/get-url', `btn-xem-anh-${id}`);
+        }
+    });
 </script>
 
 
@@ -48,7 +59,13 @@ else
                     <td>@lan.SoLuong</td>
                     <td>@lan.TongTien.ToString("N0") đ</td>
                     <td>
-                        <button onclick="xemHinhLanDatHang(@lan.IdLanDatHang)" class="btn btn-sm btn-info">Xem ảnh</button>
+                        @* <button onclick="xemHinhLanDatHang(@lan.IdLanDatHang)" class="btn btn-sm btn-info">Xem ảnh</button> *@
+                        <button id="btn-xem-anh-@lan.IdLanDatHang"
+                                onclick="xemHinhLanDatHang(@lan.IdLanDatHang)"
+                                class="btn btn-sm btn-info">
+                            Xem ảnh
+                        </button>
+
                         <div id="img-container-@lan.IdLanDatHang" class="mt-1"></div>
 
                         <form asp-controller="Image" asp-action="Create" method="post" enctype="multipart/form-data" class="d-flex flex-column">

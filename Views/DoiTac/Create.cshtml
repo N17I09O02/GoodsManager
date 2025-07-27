@@ -1,0 +1,65 @@
+﻿@model Web_Manage.ViewModels.DoiTacNguyenLieuViewModel
+
+@{
+    ViewData["Title"] = "Thêm đối tác";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thêm đối tác mới</h2>
+
+<form asp-action="Create" method="post" class="needs-validation" novalidate>
+    <div class="form-group">
+        <label asp-for="DoiTac.TenDoiTac"></label>
+        <input asp-for="DoiTac.TenDoiTac" class="form-control" />
+        <span asp-validation-for="DoiTac.TenDoiTac" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DoiTac.DiaChi"></label>
+        <input asp-for="DoiTac.DiaChi" class="form-control" />
+        <span asp-validation-for="DoiTac.DiaChi" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DoiTac.SDT">Số điện thoại</label>
+        <input asp-for="DoiTac.SDT" class="form-control" />
+        <span asp-validation-for="DoiTac.SDT" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="DoiTac.Email"></label>
+        <input asp-for="DoiTac.Email" type="email" class="form-control" />
+        <span asp-validation-for="DoiTac.Email" class="text-danger"></span>
+    </div>
+
+    <h4 class="mt-4">Nguyên liệu cung cấp</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Chọn</th>
+                <th>Tên nguyên liệu</th>
+                <th>Giá</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.NguyenLieuGias.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" asp-for="NguyenLieuGias[@i].DuocChon" class="form-check-input" />
+                        <input type="hidden" asp-for="NguyenLieuGias[@i].IdNguyenLieu" />
+                        <input type="hidden" asp-for="NguyenLieuGias[@i].TenNguyenLieu" />
+                    </td>
+                    <td>@Model.NguyenLieuGias[i].TenNguyenLieu</td>
+                    <td>
+                        <input asp-for="NguyenLieuGias[@i].Gia" class="form-control" />
+                        <span asp-validation-for="NguyenLieuGias[@i].Gia" class="text-danger"></span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success mt-3">Tạo đối tác</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Quay lại</a>
+</form>

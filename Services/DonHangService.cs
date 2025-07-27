@@ -34,9 +34,9 @@ namespace Web_Manage.Services
             return await _context.DonHangs.FirstOrDefaultAsync(dh => dh.IdKhachHang == id && dh.NgayDat == ngay);
         }
 
-        public async Task<List<DonHang>> GetAllAsync()
+        public async Task<List<DonHang>> GetAllAsync(DateOnly dateOnly)
         {
-            return await _context.DonHangs.ToListAsync();
+            return await _context.DonHangs.Where(dh => dh.NgayDat == dateOnly).ToListAsync();
         }
 
         public async Task AddAsync(DonHang donHang)

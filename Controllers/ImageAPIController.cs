@@ -22,6 +22,7 @@ namespace Web_Manage.Controllers
         [HttpGet("get-url/{id}")]
         public async Task<IActionResult> GetPresignedUrl(int id)
         {
+            Console.WriteLine($"API ➡️ Lấy URL ảnh với ID = {id}");
             var image = await _s3Service.GetImagesByIdAsync(id);
 
             if (image == null || string.IsNullOrEmpty(image.URL))
@@ -34,6 +35,7 @@ namespace Web_Manage.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Image image)
         {
+            Console.WriteLine($"API ➡️ Tạo ảnh với ID = {image.IdDonHang} hoặc {image.IdLanDatHang}");
             var save = await _s3Service.AddImageAsync(image);
             return Ok(save);
         }

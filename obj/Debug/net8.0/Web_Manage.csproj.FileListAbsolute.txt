@@ -241,3 +241,4 @@ E:\WorkShop\Web_Manage\Web_Manage\obj\Debug\net8.0\Web_Manage.genruntimeconfig.c
 E:\WorkShop\Web_Manage\Web_Manage\obj\Debug\net8.0\ref\Web_Manage.dll
 E:\WorkShop\Web_Manage\Web_Manage\bin\Debug\net8.0\appsettings.Development.json
 E:\WorkShop\Web_Manage\Web_Manage\bin\Debug\net8.0\appsettings.json
+E:\WorkShop\Web_Manage\Web_Manage\obj\Debug\net8.0\Web_Manage.sourcelink.json
